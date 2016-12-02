@@ -1,81 +1,83 @@
-import React, { Component, PropTypes } from 'react';
-import { reduxForm } from 'redux-form';
-import { createPost } from '../actions/index';
-import { Link } from 'react-router';
+import _ from 'lodash';
+import React, {Component, PropTypes} from 'react';
+import {reduxForm} from 'redux-form';
+import {Link} from 'react-router';
+
+import {createPost} from '../actions/index';
+
+const Fields = {
+    title: {
+        type: 'input',
+        label: 'Post Title'
+    },
+    categories: {
+        type: 'input',
+        label: 'Post Categories'
+    },
+    content: {
+        type: 'textarea',
+        label: 'Post Contents'
+    }
+};
 
 class PostsNew extends Component {
-  static contextTypes = {
-    router: PropTypes.object
-  };
+    static contextTypes = {
+        router: PropTypes.object
+    }
 
-  onSubmit(props) {
-    this.props.createPost(props)
-      .then(() => {
-        // blog post has been created, navigate the user to the index
-        // We navigate by calling this.context.router.push with the
-        // new path to navigate to.
-        this.context.router.push('/');
-      });
-  }
+    onSubmit(props) {
+        this.props.createPost(props)
+        .then(() => {
+            // blogpost has been created, navigate to index
+            // call this.context.router.push to send user back to index
+            this.context.router.push('/');
+        });
+    }
 
-  render() {
-    const { fields: { title, categories, content }, handleSubmit } = this.props;
+    renderField(fieldConfig, field) {
+        const fieldHelper = this.props.fields[field];
+        return (
+            <div key={fieldHelper}
+                 className={`form-group ${fieldHelper.touched && fieldHelper.invalid ? 'has-danger' : ''}`}
+                 >
+                <label>{fieldConfig.label}</label>
+                <fieldConfig.type type="text" className="form-control" {...fieldHelper} />
+                <div className="text-help">
+                    {fieldHelper.touched ? fieldHelper.error : ''}
+                </div>
+            </div>
+        );
+    }
 
-    return (
-      <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
-        <h3>Create A New Post</h3>
+    render() {
+        const {handleSubmit} = this.props;
 
-        <div className={`form-group ${title.touched && title.invalid ? 'has-danger' : ''}`}>
-          <label>Title</label>
-          <input type="text" className="form-control" {...title} />
-          <div className="text-help">
-            {title.touched ? title.error : ''}
-          </div>
-        </div>
-
-        <div className={`form-group ${categories.touched && categories.invalid ? 'has-danger' : ''}`}>
-          <label>Categories</label>
-          <input type="text" className="form-control" {...categories} />
-          <div className="text-help">
-            {categories.touched ? categories.error : ''}
-          </div>
-        </div>
-
-        <div className={`form-group ${content.touched && content.invalid ? 'has-danger' : ''}`}>
-          <label>Content</label>
-          <textarea className="form-control" {...content} />
-          <div className="text-help">
-            {content.touched ? content.error : ''}
-          </div>
-        </div>
-
-        <button type="submit" className="btn btn-primary">Submit</button>
-        <Link to="/" className="btn btn-danger">Cancel</Link>
-      </form>
-    );
-  }
+        return (
+            <div>
+                <h3>Create a New Post</h3>
+                <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
+                    {_.map(Fields, this.renderField.bind(this))}
+                    <button type="submit" className="btn btn-info">Submit</button>
+                    <Link to="/" className="btn btn-warning">Cancel</Link>
+                </form>
+            </div>
+        );
+    }
 }
 
 function validate(values) {
-  const errors = {};
-
-  if (!values.title) {
-    errors.title = 'Enter a username';
-  }
-  if (!values.categories) {
-    errors.categories = 'Enter categories';
-  }
-  if(!values.content) {
-    errors.content = 'Enter some content';
-  }
-
-  return errors;
+    const errors = {};
+    _.each(Fields, (type, field) => {
+        if (!values[field]) {
+            errors[field] = `Enter a ${field}`;
+        }
+    });
+    return errors;
 }
 
-// connect: first argument is mapStateToProps, 2nd is mapDispatchToProps
-// reduxForm: 1st is form config, 2nd is mapStateToProps, 3rd is mapDispatchToProps
+// reduxForm: 1st arg is config, 2nd arg is mapStateToProps, 3rd is mapDispatchToProps
 export default reduxForm({
-  form: 'PostsNewForm',
-  fields: ['title', 'categories', 'content'],
-  validate
-}, null, { createPost })(PostsNew);
+    form: 'PostsNew',
+    fields: _.keys(Fields),
+    validate
+}, null, {createPost})(PostsNew);
