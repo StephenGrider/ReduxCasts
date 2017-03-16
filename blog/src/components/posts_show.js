@@ -2,13 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPost, deletePost } from '../actions/index';
 import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router';
 
 class PostsShow extends Component {
-  static contextTypes = {
-    router: PropTypes.object
-  };
-
   componentWillMount() {
     if (!this.props.post) {
       // grab post id from route params
