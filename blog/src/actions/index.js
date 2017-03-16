@@ -6,7 +6,7 @@ export const FETCH_POST = 'FETCH_POST';
 export const DELETE_POST = 'DELETE_POST';
 
 const ROOT_URL = 'http://reduxblog.herokuapp.com/api';
-const API_KEY = '?key=lkajdsfapipwietpw';
+const API_KEY = '?key=jlkdsafouiwerkjlasfdj;';
 
 export function fetchPosts() {
   const request = axios.get(`${ROOT_URL}/posts${API_KEY}`);
@@ -17,8 +17,12 @@ export function fetchPosts() {
   };
 }
 
-export function createPost(props) {
-  const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, props);
+export function createPost(props, cb) {
+  const request = axios.post(`${ROOT_URL}/posts${API_KEY}`, props)
+    .then(res => {
+      cb();
+      return res;
+    });
 
   return {
     type: CREATE_POST,
@@ -35,8 +39,12 @@ export function fetchPost(id) {
   };
 }
 
-export function deletePost(id) {
-  const request = axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`);
+export function deletePost(id, cb) {
+  const request = axios.delete(`${ROOT_URL}/posts/${id}${API_KEY}`)
+  .then(res => {
+    cb();
+    return res;
+  });
 
   return {
     type: DELETE_POST,

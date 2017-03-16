@@ -1,7 +1,8 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { fetchPost, deletePost } from '../actions/index';
-import { Link } from 'react-router';
+import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router';
 
 class PostsShow extends Component {
   static contextTypes = {
@@ -9,12 +10,21 @@ class PostsShow extends Component {
   };
 
   componentWillMount() {
-    this.props.fetchPost(this.props.params.id);
+    if (!this.props.post) {
+      // grab post id from route params
+      const { id } = this.props.match.params;
+      this.props.fetchPost(id);
+    }
   }
 
   onDeleteClick() {
-    this.props.deletePost(this.props.params.id)
-      .then(() => { this.context.router.push('/'); });
+    // get post id from route params
+    const { id } = this.props.match.params
+    this.props.deletePost(id, () => {
+      // post was deleted.
+      // navigate user to new path
+      this.props.history.push('/');
+    });
   }
 
   render() {
@@ -40,8 +50,9 @@ class PostsShow extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { post: state.posts.post };
+function mapStateToProps(state, ownProps) {
+  // react-router changed props and nested params in props.match
+  return { post: state.posts[ownProps.match.params.id] };
 }
 
-export default connect(mapStateToProps, { fetchPost, deletePost })(PostsShow);
+export default connect(mapStateToProps, { fetchPost, deletePost })(PostsShow)
