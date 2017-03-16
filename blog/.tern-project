@@ -1,0 +1,23 @@
+{
+  "ecmaVersion": 6,
+  "libs": [],
+  "loadEagerly": [],
+  "dontLoad": [
+    "node_module/**"
+  ],
+  "plugins": {
+    "doc_comment": true,
+    "node": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    },
+    "node_resolve": {},
+    "modules": {
+      "dontLoad": "",
+      "load": "",
+      "modules": ""
+    },
+    "es_modules": {}
+  }
+}
