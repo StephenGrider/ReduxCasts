@@ -23,4 +23,5 @@ module.exports = {
     historyApiFallback: true,
     contentBase: './'
   }
+  devtool: 'source-map',
 };
