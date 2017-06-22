@@ -73,7 +73,14 @@ function validate(values) {
   return errors;
 }
 
-export default reduxForm({
-  validate,
-  form: "PostsNewForm"
-})(connect(null, { createPost })(PostsNew));
+export default connect(
+  null,
+  { createPost }
+)(
+  reduxForm({
+      validate,
+      form: "PostsNewForm",
+      enableReinitialize: true
+  })
+  (PostsNew)
+);
