@@ -11,12 +11,16 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    
+      
     this.state = {
       videos: [],
-      selectedVideo: null
+      selectedVideo: null 
     };
+    
+    this.iterm = "surfboards";
 
-    this.videoSearch("surfboards");
+    this.videoSearch(this.iterm);
   }
 
   videoSearch(term) {
@@ -35,7 +39,10 @@ class App extends Component {
 
     return (
       <div>
-        <SearchBar onSearchTermChange={videoSearch} />
+        <SearchBar 
+        onSearchTermChange={videoSearch} 
+        itermp={this.iterm} 
+        />
         <VideoDetail video={this.state.selectedVideo} />
         <VideoList
           onVideoSelect={selectedVideo => this.setState({ selectedVideo })}
