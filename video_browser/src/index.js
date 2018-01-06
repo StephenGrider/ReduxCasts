@@ -6,6 +6,7 @@ import SearchBar from "./components/search_bar";
 import VideoList from "./components/video_list";
 import VideoDetail from "./components/video_detail";
 const API_KEY = "AIzaSyAuQCVeNfKhtRk9KlChQPT1nO27DPO_5Ss";
+const iterm = "surfboards";
 
 class App extends Component {
   constructor(props) {
@@ -18,9 +19,9 @@ class App extends Component {
       selectedVideo: null 
     };
     
-    this.iterm = "surfboards";
+    //this.iterm = "surfboards";
 
-    this.videoSearch(this.iterm);
+    this.videoSearch(iterm);
   }
 
   videoSearch(term) {
@@ -41,7 +42,7 @@ class App extends Component {
       <div>
         <SearchBar 
         onSearchTermChange={videoSearch} 
-        itermp={this.iterm} 
+        itermp={iterm} 
         />
         <VideoDetail video={this.state.selectedVideo} />
         <VideoList
