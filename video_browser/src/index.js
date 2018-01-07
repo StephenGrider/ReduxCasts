@@ -32,16 +32,26 @@ class App extends Component {
       });
     });
   }
+    
+    /* setTimeout attempt (work differtly coz waits but then execute the function for every typing)
+    delayedVideoSearch = term => setTimeout(() => this.videoSearch(term), 5000);*/
+    //my debouced version [debounce (Lodash library method) does the trick, waits and then executes the function just once]
+    debouncedVideoSearch = _.debounce(term => {
+      this.videoSearch(term);
+    }, 500);
 
   render() {
+    /* Original version [not clear having the same name and I don't know why to put it in the render function (maybe just to take the same name)]
     const videoSearch = _.debounce(term => {
       this.videoSearch(term);
-    }, 300);
+    }, 500);*/
+      
+    
 
     return (
       <div>
         <SearchBar 
-        onSearchTermChange={videoSearch} 
+        onSearchTermChange={this.debouncedVideoSearch} 
         itermp={iterm} 
         />
         <VideoDetail video={this.state.selectedVideo} />
