@@ -15,7 +15,7 @@ import BookDetail from "../containers/book-detail";
   }
 }*/
 
-// functional version component (why it use class component since there's no state involved in the App component?)
+// functional version component (why it uses class component since there's no state involved in the App component?)
  const App = () => {
     return (
       <div>

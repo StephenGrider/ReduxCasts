@@ -12,7 +12,7 @@ export default function(state, action) {
     switch(action.type){
         case "BOOK_SELECTED":
            initData.map(selcbook => {
-                selcbook.title === action.payload.title ? selcbook.title+=' --selected--' : '';
+                selcbook.title === action.payload.title ? selcbook.selectClass='selected' : '';
                //selcbook.title === action.payload.title ? console.log(selcbook.title) : '';
                
            });
