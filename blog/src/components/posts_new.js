@@ -7,6 +7,10 @@ import { createPost } from "../actions";
 class PostsNew extends Component {
   renderField(field) {
     const { meta: { touched, error } } = field;
+    /* destructuring ES6 (the line above is the same as this below)
+    const touched = field.meta.touched;
+    const error = field.meta.error;*/
+      
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
 
     return (
@@ -27,7 +31,7 @@ class PostsNew extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit } = this.props;// destructuring ES6
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
