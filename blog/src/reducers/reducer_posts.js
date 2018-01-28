@@ -6,6 +6,9 @@ export default function(state = {}, action) {
     case DELETE_POST:
       return _.omit(state, action.payload);
     case FETCH_POST:
+          /*const post = { action.payload.data.id : action.payload.data };
+          console.log(post);
+          return { ...state };*/
       return { ...state, [action.payload.data.id]: action.payload.data };
     case FETCH_POSTS:
       return _.mapKeys(action.payload.data, "id");
