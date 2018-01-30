@@ -5,13 +5,14 @@ import { fetchPost, deletePost } from "../actions";
 
 class PostsShow extends Component {
   componentDidMount() {
-    const { id } = this.props.match.params;
-    this.props.fetchPost(id);
+      if(!this.props.post){//if the post doesn't already exist [save something and be lighter] could be also in the post_index but it changes often
+        const { id } = this.props.match.params;// props from React-Router
+        this.props.fetchPost(id);
+      }
   }
 
   onDeleteClick() {
     const { id } = this.props.match.params;
-
     this.props.deletePost(id, () => {
       this.props.history.push("/");
     });
@@ -41,8 +42,11 @@ class PostsShow extends Component {
   }
 }
 
-function mapStateToProps({ posts }, ownProps) {
+function mapStateToProps({ posts }, ownProps) { // ownProps retrieve the componet props, so in this case we have access to React-Router id props from here
   return { post: posts[ownProps.match.params.id] };
 }
+/*function mapStateToProps(state) {
+  return { post : state.posts. };
+} din't work coz the state return an obj that as a id as key and the request obj as a param, [he setted like that]*/
 
 export default connect(mapStateToProps, { fetchPost, deletePost })(PostsShow);
