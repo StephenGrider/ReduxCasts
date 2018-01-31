@@ -12,16 +12,19 @@ class PostsNew extends Component {
     const error = field.meta.error;*/
       
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
-
-    return (
+      
+      
+    let customField = !field.texarea ? <input className="form-control" type="text" {...field.input} /> : <textarea className="form-control" {...field.input} />; // defining the input type
+    
+      return(
       <div className={className}>
         <label>{field.label}</label>
-            <input className="form-control" type="text" {...field.input} />
+        {customField}// returning the right input type
         <div className="text-help">
           {touched ? error : ""}
         </div>
       </div>
-    );
+      );
   }
 
   onSubmit(values) {
@@ -44,6 +47,7 @@ class PostsNew extends Component {
           component={this.renderField}
         />
         <Field
+          texarea = "yep" // is it a textarea?
           label="Post Content"
           name="content"
           component={this.renderField}
