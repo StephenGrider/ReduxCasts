@@ -36,7 +36,7 @@ class PostsShow extends Component {
         </button>
         <h3>{post.title}</h3>
         <h6>Categories: {post.categories}</h6>
-        <p>{post.content}</p>
+        <p className="pre-content">{post.content}</p>
       </div>
     );
   }

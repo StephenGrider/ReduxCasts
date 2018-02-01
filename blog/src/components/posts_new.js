@@ -19,7 +19,7 @@ class PostsNew extends Component {
       return(
       <div className={className}>
         <label>{field.label}</label>
-        {customField}// returning the right input type
+        {customField}
         <div className="text-help">
           {touched ? error : ""}
         </div>
