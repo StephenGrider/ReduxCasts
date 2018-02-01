@@ -1,4 +1,4 @@
-import _ from "lodash";
+//import _ from "lodash";  
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
@@ -10,7 +10,8 @@ class PostsIndex extends Component {
   }
 
   renderPosts() {
-    return _.map(this.props.posts, post => {
+      //return _.map(this.props.posts, post => {
+      return Object.values(this.props.posts).map(post => { // my version without lodash
       return (
         <li className="list-group-item" key={post.id}>
           <Link to={`/posts/${post.id}`}>
@@ -20,6 +21,8 @@ class PostsIndex extends Component {
       );
     });
   }
+
+
 
   render() {
     return (

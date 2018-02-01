@@ -7,27 +7,32 @@ import { createPost } from "../actions";
 class PostsNew extends Component {
   renderField(field) {
     const { meta: { touched, error } } = field;
+    /* destructuring ES6 (the line above is the same as this below)
+    const touched = field.meta.touched;
+    const error = field.meta.error;*/
+      
     const className = `form-group ${touched && error ? "has-danger" : ""}`;
-
-    return (
+      
+      
+    let customField = !field.texarea ? <input className="form-control" type="text" {...field.input} /> : <textarea className="form-control" {...field.input} />; // defining the input type
+    
+      return(
       <div className={className}>
         <label>{field.label}</label>
-        <input className="form-control" type="text" {...field.input} />
+        {customField}
         <div className="text-help">
           {touched ? error : ""}
         </div>
       </div>
-    );
+      );
   }
 
   onSubmit(values) {
-    this.props.createPost(values, () => {
-      this.props.history.push("/");
-    });
+    this.props.createPost(values, () => this.props.history.push("/"));
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit } = this.props;// destructuring ES6
 
     return (
       <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -42,6 +47,7 @@ class PostsNew extends Component {
           component={this.renderField}
         />
         <Field
+          texarea = "yep" // is it a textarea?
           label="Post Content"
           name="content"
           component={this.renderField}
