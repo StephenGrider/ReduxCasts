@@ -1,4 +1,3 @@
-import _ from "lodash";
 import React from "react";
 import {
   Sparklines,
@@ -7,7 +6,8 @@ import {
 } from "react-sparklines";
 
 function average(data) {
-  return _.round(_.sum(data) / data.length);
+  let sum = data.reduce((previous, current) => current += previous);
+  return Math.round(sum / data.length);
 }
 
 export default props => {
